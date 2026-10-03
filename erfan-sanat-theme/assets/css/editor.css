@@ -1,0 +1,187 @@
+/**
+ * Block editor styles — the writing surface mirrors the front-end design.
+ *
+ * Runtime tokens (colours, typography, radius) are injected by
+ * inc/dynamic-css.php into this same editor context, so an editor sees the
+ * exact values configured in «قالب عرفان صنعت → تنظیمات». This file adds the
+ * parts the tokens cannot express: the self-hosted font faces and the block
+ * level styling of the published layout.
+ *
+ * @package ErfanSanat
+ * @since   1.0.0
+ */
+
+@font-face {
+	font-family: "Vazirmatn";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url("../fonts/vazirmatn-arabic-wght-normal.woff2") format("woff2-variations");
+	unicode-range: U+0600-06FF, U+0750-077F, U+0870-08E1, U+0898-08FF, U+20AC, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+	font-family: "Vazirmatn";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url("../fonts/vazirmatn-latin-wght-normal.woff2") format("woff2-variations");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+
+.editor-styles-wrapper {
+	font-family: var(--es-font-body, "Vazirmatn", Tahoma, sans-serif);
+	font-size: var(--es-font-size, 16px);
+	line-height: var(--es-line-height, 2);
+	color: var(--es-text, #f4f6fa);
+	background: var(--es-background, #0c0e13);
+	background-color: var(--es-background, #0c0e13);
+}
+
+.editor-styles-wrapper .wp-block {
+	max-width: var(--es-container, 1240px);
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4,
+.editor-styles-wrapper h5,
+.editor-styles-wrapper h6 {
+	font-family: var(--es-font-heading, var(--es-font-body, "Vazirmatn", Tahoma, sans-serif));
+	font-weight: var(--es-heading-weight, 800);
+	line-height: 1.45;
+	color: var(--es-text, #f4f6fa);
+}
+
+.editor-styles-wrapper h1 {
+	font-size: var(--es-font-size-h1, 2.6rem);
+}
+
+.editor-styles-wrapper h2 {
+	font-size: 1.9rem;
+}
+
+.editor-styles-wrapper h3 {
+	font-size: 1.5rem;
+}
+
+.editor-styles-wrapper a {
+	color: var(--es-primary, #f2b32c);
+	text-underline-offset: 3px;
+}
+
+.editor-styles-wrapper blockquote {
+	margin-inline: 0;
+	padding: 1.25rem 1.5rem;
+	border-inline-start: 4px solid var(--es-primary, #f2b32c);
+	border-radius: var(--es-radius-sm, 9px);
+	background: rgba(242, 179, 44, 0.08);
+	font-size: 1.05rem;
+}
+
+.editor-styles-wrapper blockquote p:last-child {
+	margin-block-end: 0;
+}
+
+.editor-styles-wrapper code,
+.editor-styles-wrapper pre {
+	font-family: "Vazirmatn", ui-monospace, Menlo, monospace;
+	font-size: 0.92em;
+	direction: ltr;
+	text-align: left;
+}
+
+.editor-styles-wrapper pre {
+	padding: 1.25rem;
+	border-radius: var(--es-radius-sm, 9px);
+	background: #0b0d12;
+	color: #b9e6c9;
+	overflow-x: auto;
+}
+
+.editor-styles-wrapper .wp-block-button__link {
+	border-radius: 999px;
+	background: linear-gradient(135deg, var(--es-primary, #f2b32c), var(--es-accent, #ffd980));
+	color: #14171d;
+	font-weight: 800;
+	padding: 0.8rem 1.6rem;
+}
+
+.editor-styles-wrapper .wp-block-button.is-style-outline .wp-block-button__link {
+	background: transparent;
+	border: 1px solid var(--es-primary, #f2b32c);
+	color: var(--es-primary, #f2b32c);
+}
+
+.editor-styles-wrapper table {
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: var(--es-radius-sm, 9px);
+	overflow: hidden;
+}
+
+.editor-styles-wrapper table th,
+.editor-styles-wrapper table td {
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--es-border, #262c38);
+	text-align: start;
+}
+
+.editor-styles-wrapper table th {
+	background: rgba(255, 255, 255, 0.04);
+	font-weight: 700;
+}
+
+.editor-styles-wrapper table th:first-child {
+	width: 40%;
+	color: var(--es-text, #f4f6fa);
+}
+
+.editor-styles-wrapper hr {
+	border: 0;
+	border-block-start: 1px solid var(--es-border, #262c38);
+	margin-block: 2.5rem;
+}
+
+.editor-styles-wrapper figure img {
+	border-radius: var(--es-radius, 18px);
+}
+
+.editor-styles-wrapper figcaption {
+	margin-block-start: 0.6rem;
+	color: var(--es-muted, #9aa6b8);
+	font-size: 0.85rem;
+	text-align: center;
+}
+
+.editor-styles-wrapper .wp-block-separator {
+	border-color: var(--es-border, #262c38);
+}
+
+.editor-styles-wrapper .wp-block-quote.is-style-large,
+.editor-styles-wrapper .wp-block-quote.is-large {
+	padding: 1.75rem 2rem;
+	font-size: 1.25rem;
+}
+
+.editor-styles-wrapper .wp-block-cover__inner-container,
+.editor-styles-wrapper .wp-block-group {
+	color: inherit;
+}
+
+.editor-styles-wrapper ul,
+.editor-styles-wrapper ol {
+	padding-inline-start: 1.6rem;
+}
+
+.editor-styles-wrapper li {
+	margin-block-end: 0.4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.editor-styles-wrapper * {
+		transition-duration: 0.001ms !important;
+		animation-duration: 0.001ms !important;
+	}
+}

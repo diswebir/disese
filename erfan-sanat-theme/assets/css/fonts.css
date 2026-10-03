@@ -1,0 +1,61 @@
+/**
+ * Self-hosted typography — Vazirmatn variable font (SIL Open Font License 1.1).
+ *
+ * The font is served from this theme only: no Google Fonts, no CDN, no
+ * third-party request. Three unicode-range subsets keep the initial payload
+ * small (arabic ≈ 45 KB, latin ≈ 34 KB, latin-ext ≈ 21 KB, woff2, wght 100–900).
+ *
+ * @package ErfanSanat
+ * @since   1.0.0
+ */
+
+@font-face {
+	font-family: "Vazirmatn";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url("../fonts/vazirmatn-arabic-wght-normal.woff2") format("woff2-variations");
+	unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0898-08E1, U+08E3-08FF,
+		U+200B-200E, U+2010-2011, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030-2031,
+		U+2035-2036, U+203B-203C, U+203E, U+2041-2043, U+2045-2046, U+2048-2049, U+204B-204C, U+204E-2051,
+		U+2053-2057, U+2059-205E, U+2060-2064, U+2066-206F, U+20AC, U+FB50-FDFF, U+FE70-FEFF;
+}
+
+@font-face {
+	font-family: "Vazirmatn";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url("../fonts/vazirmatn-latin-wght-normal.woff2") format("woff2-variations");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+		U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: "Vazirmatn";
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 900;
+	src: url("../fonts/vazirmatn-latin-ext-wght-normal.woff2") format("woff2-variations");
+	unicode-range: U+0100-02AF, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1E00-1E9F,
+		U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/*
+ * Design tokens used by the runtime dynamic CSS (inc/dynamic-css.php) as the
+ * fallback values, so the very first paint — before the inline stylesheet is
+ * parsed — already uses the self-hosted family instead of a system fallback.
+ */
+:root {
+	--es-font-body: "Vazirmatn", "Segoe UI", Tahoma, "Iranian Sans", sans-serif;
+	--es-font-heading: "Vazirmatn", "Segoe UI", Tahoma, "Iranian Sans", sans-serif;
+	--es-font-mono: "Vazirmatn", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* Persian digits feel native in the UI; keep form controls inheriting the font. */
+input,
+select,
+textarea,
+button {
+	font-family: inherit;
+}

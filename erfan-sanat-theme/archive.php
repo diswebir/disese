@@ -33,17 +33,17 @@ $es_is_product = 'product' === $es_post_type;
 
 if ( $es_is_project ) {
 	$es_columns = max( 1, min( 4, (int) es_opt( 'project_archive_columns', 3 ) ) );
-	$es_sidebar = (bool) es_opt( 'project_show_filters', true );
+	$es_sidebar = es_sidebar_visible( 'project' );
 	$es_title   = (string) es_opt( 'project_archive_title', __( 'پروژه‌های نورپردازی', 'erfan-sanat' ) );
 	$es_desc    = (string) es_opt( 'project_archive_text', '' );
 } elseif ( $es_is_product ) {
 	$es_columns = max( 1, min( 4, (int) es_opt( 'product_archive_columns', 3 ) ) );
-	$es_sidebar = (bool) es_opt( 'product_archive_sidebar', true );
+	$es_sidebar = es_sidebar_visible( 'shop' );
 	$es_title   = (string) es_opt( 'wc_shop_title', __( 'فروشگاه تجهیزات نورپردازی', 'erfan-sanat' ) );
 	$es_desc    = (string) es_opt( 'wc_shop_text', '' );
 } else {
 	$es_columns = max( 1, min( 4, (int) es_opt( 'blog_columns', 3 ) ) );
-	$es_sidebar = (bool) es_opt( 'blog_sidebar', true );
+	$es_sidebar = es_sidebar_visible( 'blog' );
 	$es_title   = wp_strip_all_tags( (string) get_the_archive_title() );
 	$es_desc    = (string) get_the_archive_description();
 }

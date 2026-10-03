@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="مراحل اجرای پروژه‌های نورپردازی در تونل نوری">
+	<defs>
+		<linearGradient id="ptSky" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#04060b"/>
+			<stop offset="1" stop-color="#080b12"/>
+		</linearGradient>
+		<linearGradient id="ptWall" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#161c29"/>
+			<stop offset="1" stop-color="#0a0d14"/>
+		</linearGradient>
+		<radialGradient id="ptCore" cx="50%" cy="50%" r="50%">
+			<stop offset="0" stop-color="#fff3d4" stop-opacity=".95"/>
+			<stop offset=".45" stop-color="#f2b32c" stop-opacity=".5"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity="0"/>
+		</radialGradient>
+		<linearGradient id="ptRing" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#ffd980"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity=".25"/>
+		</linearGradient>
+		<filter id="ptBlur" x="-30%" y="-30%" width="160%" height="160%">
+			<feGaussianBlur stdDeviation="22"/>
+		</filter>
+	</defs>
+
+	<rect width="1600" height="900" fill="url(#ptSky)"/>
+
+	<!-- tunnel shell -->
+	<path d="M0 900V420a800 480 0 0 1 1600 0v480z" fill="url(#ptWall)"/>
+	<path d="M0 900V420a800 480 0 0 1 1600 0v480" fill="none" stroke="#242c3c" stroke-width="4"/>
+
+	<!-- floor -->
+	<path d="M0 900h1600v-80c-260-40-520-60-800-60s-540 20-800 60z" fill="#0c1018"/>
+	<path d="M800 700V900" stroke="#1c2434" stroke-width="4"/>
+	<path d="M600 900 760 706M1000 900 840 706M400 900 730 712M1200 900 870 712M200 900 700 720M1400 900 900 720" stroke="#161d29" stroke-width="3"/>
+
+	<!-- light rings -->
+	<g fill="none" stroke="url(#ptRing)" stroke-linecap="round">
+		<g opacity=".9"><path d="M120 900V444a680 400 0 0 1 1360 0v456" stroke-width="28"/></g>
+		<g opacity=".72"><path d="M280 900V470a520 320 0 0 1 1040 0v430" stroke-width="20"/></g>
+		<g opacity=".56"><path d="M420 900V494a380 250 0 0 1 760 0v406" stroke-width="14"/></g>
+		<g opacity=".42"><path d="M540 900V514a260 180 0 0 1 520 0v386" stroke-width="10"/></g>
+		<g opacity=".3"><path d="M640 900V532a160 110 0 0 1 320 0v368" stroke-width="7"/></g>
+	</g>
+
+	<!-- vanishing point glow -->
+	<ellipse cx="800" cy="620" rx="260" ry="160" fill="url(#ptCore)"/>
+	<ellipse cx="800" cy="620" rx="90" ry="56" fill="#fff8e6" opacity=".85" filter="url(#ptBlur)"/>
+
+	<!-- vehicle light trail -->
+	<path d="M700 860 796 632" stroke="#ffd980" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+	<path d="M872 862 806 634" stroke="#ff6b5e" stroke-width="6" stroke-linecap="round" opacity=".6"/>
+
+	<!-- wall light dots -->
+	<g fill="#ffe6ad">
+		<circle cx="150" cy="612" r="7" opacity=".85"/>
+		<circle cx="320" cy="556" r="6" opacity=".7"/>
+		<circle cx="500" cy="524" r="5" opacity=".6"/>
+		<circle cx="1450" cy="612" r="7" opacity=".85"/>
+		<circle cx="1280" cy="556" r="6" opacity=".7"/>
+		<circle cx="1100" cy="524" r="5" opacity=".6"/>
+	</g>
+
+	<!-- vignette -->
+	<radialGradient id="ptVig" cx="50%" cy="58%" r="70%">
+		<stop offset=".45" stop-color="#000" stop-opacity="0"/>
+		<stop offset="1" stop-color="#000" stop-opacity=".68"/>
+	</radialGradient>
+	<rect width="1600" height="900" fill="url(#ptVig)"/>
+</svg>

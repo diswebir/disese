@@ -54,6 +54,8 @@ function es_icon_library( $name ) {
 		'calendar'   => '<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3.5V6M16 3.5V6"/>',
 		'user'       => '<circle cx="12" cy="9" r="3.5"/><path d="M5 20c1.2-3.4 3.7-5 7-5s5.8 1.6 7 5"/>',
 		'tag'        => '<path d="M12.5 3.5H20v7.5l-8.5 8.5L4 12l8.5-8.5z"/><circle cx="16.8" cy="7.2" r="1.3"/>',
+		'link'       => '<path d="M10 13.5a3.5 3.5 0 0 0 5 0l3-3a3.5 3.5 0 0 0-5-5l-1 1"/><path d="M14 10.5a3.5 3.5 0 0 0-5 0l-3 3a3.5 3.5 0 0 0 5 5l1-1"/>',
+		'image'      => '<rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="10.5" r="1.8"/><path d="M4 17l4.6-4.2a1.5 1.5 0 0 1 2 0L15 16"/><path d="M13.5 14.5l1.9-1.7a1.5 1.5 0 0 1 2 0l2.6 2.4"/>',
 		'folder'     => '<path d="M4 7a2 2 0 0 1 2-2h3.2l2 2H18a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z"/>',
 		'zoom'       => '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5M8.5 11h5M11 8.5v5"/>',
 		'plus'       => '<path d="M12 5v14M5 12h14"/>',
@@ -786,7 +788,13 @@ function es_meta_description() {
  * @return string 'rtl' or 'ltr'.
  */
 function es_theme_direction() {
-	$direction = is_rtl() ? 'rtl' : 'ltr';
+	$setting = (string) es_opt( 'site_direction', 'rtl' );
+
+	if ( 'auto' === $setting ) {
+		$direction = is_rtl() ? 'rtl' : 'ltr';
+	} else {
+		$direction = 'ltr' === $setting ? 'ltr' : 'rtl';
+	}
 
 	/**
 	 * Filters the theme text direction.
@@ -985,7 +993,7 @@ function es_add_heading_ids( $content ) {
 			$attrs = isset( $matches[2] ) ? (string) $matches[2] : '';
 
 			// Never touch a heading that already carries an id.
-			if ( preg_match( '/\sid=(["'])/i', $attrs ) ) {
+			if ( preg_match( "/\\sid=([\"'])/i", $attrs ) ) {
 				return $matches[0];
 			}
 
@@ -1014,6 +1022,33 @@ function es_add_heading_ids( $content ) {
 add_filter( 'the_content', 'es_add_heading_ids', 8 );
 
 /**
+ * Whether the sidebar column is enabled for a given context.
+ *
+ * Single source of truth for blog / shop / project archive layouts, so the
+ * wrapper class and the rendered column can never disagree.
+ *
+ * @param string $context blog|shop|project.
+ * @return bool
+ */
+function es_sidebar_visible( $context = 'blog' ) {
+	switch ( $context ) {
+		case 'shop':
+			$visible = (bool) es_opt( 'product_archive_sidebar', false );
+			break;
+
+		case 'project':
+			$visible = (bool) es_opt( 'project_archive_sidebar', true );
+			break;
+
+		default:
+			$visible = (bool) es_opt( 'blog_sidebar', true );
+			break;
+	}
+
+	return (bool) apply_filters( 'es_sidebar_visible', $visible, $context );
+}
+
+/**
  * Collect the h2/h3 headings of a piece of content for the table of contents.
  *
  * The ids follow the same scheme as es_add_heading_ids().
@@ -1038,18 +1073,23 @@ function es_collect_headings( $content ) {
 			continue;
 		}
 
-		if ( preg_match( '/\sid=(["'])(.+?)\1/i', $attrs, $id_match ) ) {
-			$id = $id_match[2];
+		if ( preg_match( "/\\sid=([\"'])(.+?)\\1/i", $attrs, $id_match ) ) {
+			$base = $id_match[2];
 		} else {
-			$id = sanitize_title( $text );
+			$base = sanitize_title( $text );
 
-			if ( ! $id ) {
-				$id = 'section';
+			if ( ! $base ) {
+				$base = 'section';
 			}
 		}
 
+		// Same de-duplication scheme as es_add_heading_ids(), so anchors match.
+		$id = $base;
+		$i  = 2;
+
 		while ( in_array( $id, $used, true ) ) {
-			$id .= '-2';
+			$id = $base . '-' . $i;
+			$i++;
 		}
 
 		$used[]     = $id;

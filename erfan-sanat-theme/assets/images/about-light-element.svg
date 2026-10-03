@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" width="960" height="640" role="img" aria-label="المان نوری گوی نورانی">
+	<defs>
+		<linearGradient id="abBack" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#0b0e15"/>
+			<stop offset=".6" stop-color="#080a10"/>
+			<stop offset="1" stop-color="#05060a"/>
+		</linearGradient>
+		<radialGradient id="abOrb" cx="38%" cy="34%" r="72%">
+			<stop offset="0" stop-color="#fff6dd"/>
+			<stop offset=".45" stop-color="#ffd980"/>
+			<stop offset="1" stop-color="#c8890f"/>
+		</radialGradient>
+		<radialGradient id="abHalo" cx="50%" cy="50%" r="50%">
+			<stop offset="0" stop-color="#f2b32c" stop-opacity=".55"/>
+			<stop offset=".6" stop-color="#f2b32c" stop-opacity=".16"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity="0"/>
+		</radialGradient>
+		<linearGradient id="abStem" x1="0" y1="0" x2="1" y2="0">
+			<stop offset="0" stop-color="#2a3140"/>
+			<stop offset=".5" stop-color="#59637a"/>
+			<stop offset="1" stop-color="#1d232f"/>
+		</linearGradient>
+		<linearGradient id="abBase" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#39415a"/>
+			<stop offset="1" stop-color="#141821"/>
+		</linearGradient>
+		<filter id="abBlur" x="-40%" y="-40%" width="180%" height="180%">
+			<feGaussianBlur stdDeviation="26"/>
+		</filter>
+	</defs>
+
+	<rect width="960" height="640" fill="url(#abBack)"/>
+
+	<!-- floor arc -->
+	<ellipse cx="480" cy="560" rx="370" ry="58" fill="#121722" opacity=".9"/>
+	<ellipse cx="480" cy="560" rx="370" ry="58" fill="none" stroke="#2a3140" stroke-width="2" opacity=".7"/>
+
+	<!-- halo -->
+	<ellipse cx="480" cy="268" rx="300" ry="270" fill="url(#abHalo)"/>
+	<ellipse cx="480" cy="268" rx="150" ry="150" fill="#f2b32c" opacity=".35" filter="url(#abBlur)"/>
+
+	<!-- light rings -->
+	<g fill="none" stroke="#ffd980">
+		<ellipse cx="480" cy="268" rx="210" ry="70" stroke-width="3" opacity=".35" transform="rotate(-14 480 268)"/>
+		<ellipse cx="480" cy="268" rx="248" ry="84" stroke-width="2" opacity=".22" transform="rotate(12 480 268)"/>
+	</g>
+
+	<!-- orb -->
+	<circle cx="480" cy="268" r="132" fill="url(#abOrb)"/>
+	<circle cx="480" cy="268" r="132" fill="none" stroke="#fff2cf" stroke-opacity=".5" stroke-width="2"/>
+	<path d="M406 196a104 104 0 0 1 118-30 120 120 0 0 0-118 30z" fill="#fffdf5" opacity=".55"/>
+
+	<!-- support -->
+	<rect x="466" y="398" width="28" height="120" rx="10" fill="url(#abStem)"/>
+	<rect x="418" y="512" width="124" height="26" rx="13" fill="url(#abBase)"/>
+	<rect x="392" y="534" width="176" height="16" rx="8" fill="#0f131b"/>
+
+	<!-- reflected light on the floor -->
+	<ellipse cx="480" cy="566" rx="140" ry="20" fill="#f2b32c" opacity=".22" filter="url(#abBlur)"/>
+
+	<!-- measurement ticks, blueprint cue -->
+	<g stroke="#f2b32c" stroke-opacity=".35" stroke-width="2">
+		<path d="M120 120h120M120 112v16M240 112v16"/>
+		<path d="M840 120h-120M840 112v16M720 112v16"/>
+	</g>
+</svg>

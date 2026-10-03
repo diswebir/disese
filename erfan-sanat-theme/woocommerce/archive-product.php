@@ -28,7 +28,7 @@ if ( woocommerce_product_loop() ) {
 	 */
 	do_action( 'woocommerce_before_shop_loop' );
 
-	echo '<div class="es-woo__layout' . ( es_opt( 'product_archive_sidebar', true ) && is_active_sidebar( 'es-shop-sidebar' ) ? ' has-sidebar' : '' ) . '">';
+	echo '<div class="es-woo__layout' . ( es_sidebar_visible( 'shop' ) ? ' has-sidebar' : '' ) . '">';
 	echo '<div class="es-woo__main">';
 
 	woocommerce_product_loop_start();
@@ -57,10 +57,8 @@ if ( woocommerce_product_loop() ) {
 
 	echo '</div><!-- .es-woo__main -->';
 
-	if ( es_opt( 'product_archive_sidebar', true ) ) {
-		echo '<aside class="es-sidebar es-sidebar--shop">';
-		get_template_part( 'template-parts/global/sidebar', 'shop' );
-		echo '</aside>';
+	if ( es_sidebar_visible( 'shop' ) ) {
+		get_template_part( 'template-parts/global/sidebar', 'shop', array( 'name' => 'shop' ) );
 	}
 
 	echo '</div><!-- .es-woo__layout -->';

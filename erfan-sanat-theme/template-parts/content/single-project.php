@@ -25,11 +25,15 @@ $es_places   = get_the_terms( $es_post_id, 'project_location' );
 
 	<article <?php post_class( 'es-single es-single--project' ); ?>>
 
-		<header class="es-single__hero">
-			<div class="es-single__hero-media">
-				<?php es_post_thumbnail( $es_post_id, 'es-hero', 'es-single__hero-image' ); ?>
-				<span class="es-single__hero-overlay" aria-hidden="true"></span>
-			</div>
+		<?php $es_has_cover = has_post_thumbnail( $es_post_id ); ?>
+
+		<header class="es-single__hero<?php echo $es_has_cover ? ' es-single__hero--media' : ' es-single__hero--plain'; ?>">
+			<?php if ( $es_has_cover ) : ?>
+				<div class="es-single__hero-media">
+					<?php es_post_thumbnail( $es_post_id, 'es-hero', 'es-single__hero-image' ); ?>
+					<span class="es-single__hero-overlay" aria-hidden="true"></span>
+				</div>
+			<?php endif; ?>
 
 			<div class="es-container es-single__hero-inner">
 				<?php if ( $es_cats && ! is_wp_error( $es_cats ) ) : ?>
@@ -152,7 +156,15 @@ $es_places   = get_the_terms( $es_post_id, 'project_location' );
 
 			<aside class="es-single__aside">
 				<?php get_template_part( 'template-parts/project/specs' ); ?>
-				<?php get_template_part( 'template-parts/global/sidebar', 'blog' ); ?>
+				<?php if ( es_opt( 'project_show_filters', true ) ) : ?>
+					<?php
+					get_template_part(
+						'template-parts/project/filters',
+						null,
+						array( 'base' => (string) get_post_type_archive_link( 'project' ) )
+					);
+					?>
+				<?php endif; ?>
 			</aside>
 		</div>
 	</article>

@@ -32,6 +32,33 @@ function es_font_stack( $key, $fallback ) {
 }
 
 /**
+ * Relative brightness of a hex colour (0 = black, 1 = white).
+ *
+ * Drives the automatic light/dark surface tokens so the theme stays readable
+ * whatever background the site owner picks.
+ *
+ * @param string $hex Hex colour.
+ * @return float
+ */
+function es_color_brightness( $hex ) {
+	$hex = ltrim( (string) $hex, '#' );
+
+	if ( 3 === strlen( $hex ) ) {
+		$hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
+	}
+
+	if ( 6 !== strlen( $hex ) || ! ctype_xdigit( $hex ) ) {
+		return 0.1; // Unknown value: assume a dark surface.
+	}
+
+	$r = hexdec( substr( $hex, 0, 2 ) ) / 255;
+	$g = hexdec( substr( $hex, 2, 2 ) ) / 255;
+	$b = hexdec( substr( $hex, 4, 2 ) ) / 255;
+
+	return ( 0.2126 * $r ) + ( 0.7152 * $g ) + ( 0.0722 * $b );
+}
+
+/**
  * Build the :root token block.
  *
  * @return string
@@ -43,16 +70,55 @@ function es_design_tokens_css() {
 	$overlay    = (float) es_opt( 'hero_overlay_opacity', 72 ) / 100;
 	$enable_glow = (bool) es_opt( 'enable_glow', true );
 
+	/*
+	 * The line-height control is a percentage (150–220) so editors never have to
+	 * think in unitless factors; CSS wants the factor. Normalise no matter which
+	 * form was stored (190 → 1.9, 1.9 → 1.9).
+	 */
+	$line_height = (float) es_opt( 'line_height', 1.9 );
+
+	if ( $line_height > 5 ) {
+		$line_height = $line_height / 100;
+	}
+
+	$line_height = max( 1, min( 2.6, round( $line_height, 2 ) ) );
+
+	$background = (string) es_opt( 'color_background', '#f7f8fa' );
+	$is_dark    = es_color_brightness( $background ) < 0.5;
+
+	if ( $is_dark ) {
+		$glass = array(
+			'--es-glass-1' => 'rgba(255, 255, 255, 0.03)',
+			'--es-glass-2' => 'rgba(255, 255, 255, 0.05)',
+			'--es-glass-3' => 'rgba(255, 255, 255, 0.07)',
+			'--es-glass-4' => 'rgba(255, 255, 255, 0.1)',
+		);
+		$header_bg = 'rgba(10, 11, 14, 0.92)';
+	} else {
+		$glass = array(
+			'--es-glass-1' => 'rgba(16, 24, 40, 0.03)',
+			'--es-glass-2' => 'rgba(16, 24, 40, 0.05)',
+			'--es-glass-3' => 'rgba(16, 24, 40, 0.07)',
+			'--es-glass-4' => 'rgba(16, 24, 40, 0.1)',
+		);
+		$header_bg = 'rgba(255, 255, 255, 0.92)';
+	}
+
 	$tokens = array(
+		'--es-scheme'        => $is_dark ? 'dark' : 'light',
+		'--es-header-bg'     => $header_bg,
+		'--es-on-dark'       => '#f4f6fa',
+		'--es-on-dark-muted' => '#9aa6b8',
+		'--es-on-dark-border' => 'rgba(255, 255, 255, 0.14)',
 		'--es-primary'       => (string) es_opt( 'color_primary', '#f2b32c' ),
 		'--es-secondary'     => (string) es_opt( 'color_secondary', '#1d2536' ),
 		'--es-accent'        => (string) es_opt( 'color_accent', '#ffd980' ),
-		'--es-background'    => (string) es_opt( 'color_background', '#0a0b0e' ),
-		'--es-surface'       => (string) es_opt( 'color_surface', '#14171d' ),
-		'--es-surface-alt'   => (string) es_opt( 'color_surface_alt', '#1b202a' ),
-		'--es-text'          => (string) es_opt( 'color_text', '#f4f6fa' ),
-		'--es-muted'         => (string) es_opt( 'color_muted', '#9aa6b8' ),
-		'--es-border'        => (string) es_opt( 'color_border', '#262c38' ),
+		'--es-background'    => (string) es_opt( 'color_background', '#f7f8fa' ),
+		'--es-surface'       => (string) es_opt( 'color_surface', '#ffffff' ),
+		'--es-surface-alt'   => (string) es_opt( 'color_surface_alt', '#eef1f6' ),
+		'--es-text'          => (string) es_opt( 'color_text', '#101722' ),
+		'--es-muted'         => (string) es_opt( 'color_muted', '#5c6675' ),
+		'--es-border'        => (string) es_opt( 'color_border', '#e3e7ee' ),
 		'--es-radius'        => $radius . 'px',
 		'--es-radius-sm'     => max( 4, round( $radius * 0.5 ) ) . 'px',
 		'--es-radius-lg'     => round( $radius * 1.5 ) . 'px',
@@ -62,11 +128,13 @@ function es_design_tokens_css() {
 		'--es-font-size'     => (int) es_opt( 'font_size_base', 16 ) . 'px',
 		'--es-font-size-h1'  => (int) es_opt( 'font_size_h1', 52 ) . 'px',
 		'--es-heading-weight' => (int) es_opt( 'heading_weight', 800 ),
-		'--es-line-height'   => (float) es_opt( 'line_height', 1.85 ),
+		'--es-line-height'   => (string) $line_height,
 		'--es-glow'          => $enable_glow ? (string) $glow : '0',
 		'--es-hero-overlay'  => (string) $overlay,
 		'--es-shadow'        => $enable_glow ? '0 24px 60px -30px rgba(0,0,0,.85)' : 'none',
 	);
+
+	$tokens = array_merge( $tokens, $glass );
 
 	/**
 	 * Filters the runtime design tokens before they are printed.

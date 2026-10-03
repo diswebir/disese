@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 1100" width="880" height="1100" role="img" aria-label="خدمات نورپردازی شهری در نمای شبانه">
+	<defs>
+		<linearGradient id="svSky" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#070910"/>
+			<stop offset=".5" stop-color="#0b0f18"/>
+			<stop offset="1" stop-color="#04060b"/>
+		</linearGradient>
+		<linearGradient id="svFacade" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#131a26"/>
+			<stop offset="1" stop-color="#080b12"/>
+		</linearGradient>
+		<radialGradient id="svGlow" cx="50%" cy="30%" r="55%">
+			<stop offset="0" stop-color="#f2b32c" stop-opacity=".45"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity="0"/>
+		</radialGradient>
+		<filter id="svBlur" x="-40%" y="-40%" width="180%" height="180%">
+			<feGaussianBlur stdDeviation="16"/>
+		</filter>
+	</defs>
+
+	<rect width="880" height="1100" fill="url(#svSky)"/>
+	<ellipse cx="440" cy="240" rx="420" ry="300" fill="url(#svGlow)"/>
+
+	<!-- back skyline -->
+	<g fill="#0d131e">
+		<path d="M0 520h92v-120h74v120h110v-190h84v190h120v-96h96v96h116v-150h78v150h104v-80h86v80h96v600H0z"/>
+	</g>
+
+	<!-- main illuminated facade -->
+	<g>
+		<rect x="150" y="330" width="580" height="700" rx="14" fill="url(#svFacade)" stroke="#222b3c" stroke-width="2"/>
+		<!-- light lines along the facade -->
+		<g fill="none" stroke="#ffd980" stroke-linecap="round">
+			<path d="M150 372h580" stroke-width="5" opacity=".95"/>
+			<path d="M150 448h580" stroke-width="3" opacity=".6"/>
+			<path d="M150 524h580" stroke-width="3" opacity=".45"/>
+			<path d="M186 330v700" stroke-width="3" opacity=".35"/>
+			<path d="M694 330v700" stroke-width="3" opacity=".35"/>
+		</g>
+		<!-- pixel point windows -->
+		<g fill="#ffe6ad">
+			<rect x="196" y="392" width="16" height="12" opacity=".85"/>
+			<rect x="248" y="392" width="16" height="12" opacity=".6"/>
+			<rect x="352" y="392" width="16" height="12" opacity=".75"/>
+			<rect x="508" y="392" width="16" height="12" opacity=".5"/>
+			<rect x="612" y="392" width="16" height="12" opacity=".8"/>
+			<rect x="196" y="468" width="16" height="12" opacity=".5"/>
+			<rect x="300" y="468" width="16" height="12" opacity=".8"/>
+			<rect x="456" y="468" width="16" height="12" opacity=".65"/>
+			<rect x="664" y="468" width="16" height="12" opacity=".7"/>
+			<rect x="248" y="544" width="16" height="12" opacity=".6"/>
+			<rect x="404" y="544" width="16" height="12" opacity=".85"/>
+			<rect x="560" y="544" width="16" height="12" opacity=".5"/>
+		</g>
+	</g>
+
+	<!-- light strings -->
+	<g fill="none" stroke="#f2b32c" stroke-width="2" opacity=".7">
+		<path d="M40 300q160 60 320 0t320 0q90 34 160 0"/>
+		<path d="M40 214q180 70 360 0t440 0"/>
+	</g>
+	<g fill="#ffe6ad">
+		<circle cx="120" cy="322" r="6"/>
+		<circle cx="240" cy="330" r="6"/>
+		<circle cx="360" cy="318" r="6"/>
+		<circle cx="480" cy="300" r="6"/>
+		<circle cx="600" cy="302" r="6"/>
+		<circle cx="720" cy="318" r="6"/>
+		<circle cx="200" cy="238" r="5"/>
+		<circle cx="420" cy="248" r="5"/>
+		<circle cx="640" cy="236" r="5"/>
+	</g>
+
+	<!-- ground reflection -->
+	<rect x="0" y="940" width="880" height="160" fill="#0a0e16"/>
+	<ellipse cx="440" cy="1000" rx="420" ry="70" fill="#f2b32c" opacity=".16" filter="url(#svBlur)"/>
+	<g stroke="#f2b32c" stroke-opacity=".22" stroke-width="2">
+		<path d="M150 1030 250 960M330 1030 400 960M530 1030 520 960M730 1030 660 960"/>
+	</g>
+
+	<!-- vignette -->
+	<radialGradient id="svVig" cx="50%" cy="45%" r="75%">
+		<stop offset=".5" stop-color="#000" stop-opacity="0"/>
+		<stop offset="1" stop-color="#000" stop-opacity=".7"/>
+	</radialGradient>
+	<rect width="880" height="1100" fill="url(#svVig)"/>
+</svg>

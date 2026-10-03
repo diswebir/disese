@@ -104,7 +104,7 @@ $es_faqs     = es_meta( '_es_faq_schema_repeater', $es_post_id, array() );
 			</div>
 
 			<aside class="es-single__aside">
-				<?php get_template_part( 'template-parts/global/sidebar', 'blog' ); ?>
+				<?php get_template_part( 'template-parts/global/sidebar', 'blog', array( 'name' => 'blog' ) ); ?>
 			</aside>
 		</div>
 	</article>

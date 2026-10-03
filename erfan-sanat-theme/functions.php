@@ -52,6 +52,7 @@ $es_modules = array(
 	'accessibility',
 	'woocommerce',
 	'contact',
+	'demo-content',
 );
 
 foreach ( $es_modules as $es_module ) {
@@ -66,7 +67,7 @@ foreach ( $es_modules as $es_module ) {
  * Admin-only modules
  * ---------------------------------------------------------------------- */
 if ( is_admin() ) {
-	$es_admin_modules = array( 'fields', 'dashboard', 'tools', 'import-export', 'demo-content' );
+	$es_admin_modules = array( 'fields', 'dashboard', 'tools', 'import-export' );
 
 	foreach ( $es_admin_modules as $es_module ) {
 		$es_module_path = ES_THEME_DIR . 'inc/admin/' . $es_module . '.php';

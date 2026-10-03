@@ -85,17 +85,30 @@ if ( es_woocommerce_active() ) {
 			</div>
 		<?php else : ?>
 			<?php
-			es_empty_state(
-				array(
-					'title'       => __( 'محصولی برای نمایش وجود ندارد.', 'erfan-sanat' ),
-					'text'        => es_woocommerce_active()
-						? __( 'با افزودن محصول از پیشخوان، این بخش به‌صورت خودکار تکمیل می‌شود.', 'erfan-sanat' )
-						: __( 'برای فعال‌سازی فروشگاه، افزونهٔ ووکامرس را نصب و فعال کنید.', 'erfan-sanat' ),
-					'icon'        => 'cart',
-					'button_text' => es_woocommerce_active() && current_user_can( 'edit_products' ) ? __( 'افزودن محصول', 'erfan-sanat' ) : '',
-					'button_url'  => es_woocommerce_active() && current_user_can( 'edit_products' ) ? admin_url( 'post-new.php?post_type=product' ) : '',
-				)
+			$es_empty = array(
+				'title' => __( 'محصولی برای نمایش وجود ندارد.', 'erfan-sanat' ),
+				'icon'  => 'cart',
+				'text'  => __( 'برای فعال‌سازی فروشگاه، افزونهٔ ووکامرس را نصب و فعال کنید.', 'erfan-sanat' ),
 			);
+
+			if ( es_woocommerce_active() ) {
+				$es_empty['text'] = __( 'با افزودن محصول از پیشخوان، این بخش به‌صورت خودکار تکمیل می‌شود.', 'erfan-sanat' );
+			}
+
+			if ( es_woocommerce_active() && current_user_can( 'edit_products' ) ) {
+				$es_empty['button_text'] = __( 'افزودن محصول', 'erfan-sanat' );
+				$es_empty['button_url']  = admin_url( 'post-new.php?post_type=product' );
+			} else {
+				// Visitors never see a dead end: route them to a real enquiry.
+				$es_contact_page = get_page_by_path( 'contact' );
+
+				$es_empty['button_text'] = __( 'درخواست مشاوره و استعلام قیمت', 'erfan-sanat' );
+				$es_empty['button_url']  = $es_contact_page instanceof WP_Post
+					? (string) get_permalink( $es_contact_page )
+					: home_url( '/contact/' );
+			}
+
+			es_empty_state( $es_empty );
 			?>
 		<?php endif; ?>
 	</div>

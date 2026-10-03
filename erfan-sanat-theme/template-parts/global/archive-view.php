@@ -64,7 +64,19 @@ $es_found   = isset( $GLOBALS['wp_query']->found_posts ) ? (int) $GLOBALS['wp_qu
 
 		<?php
 		if ( $es_side ) {
-			get_template_part( 'template-parts/global/sidebar', 'product' === $es_type ? 'shop' : 'blog' );
+			$es_sidebar_context = 'blog';
+
+			if ( 'project' === $es_type ) {
+				$es_sidebar_context = 'project';
+			} elseif ( 'product' === $es_type ) {
+				$es_sidebar_context = 'shop';
+			}
+
+			get_template_part(
+				'template-parts/global/sidebar',
+				$es_sidebar_context,
+				array( 'name' => $es_sidebar_context )
+			);
 		}
 		?>
 	</div>

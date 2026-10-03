@@ -13,6 +13,37 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Every control type the renderer understands.
+ *
+ * The options schema, the meta boxes and the import validator all check their
+ * field types against this list, so an unknown type is caught early instead of
+ * rendering nothing.
+ *
+ * @return string[]
+ */
+function es_field_types() {
+	return array(
+		'text',
+		'textarea',
+		'editor',
+		'number',
+		'range',
+		'url',
+		'email',
+		'toggle',
+		'select',
+		'multiselect',
+		'color',
+		'icon',
+		'font',
+		'image',
+		'gallery',
+		'repeater',
+		'hidden',
+	);
+}
+
+/**
  * Normalise a field definition with defaults.
  *
  * @param array $field Field definition.

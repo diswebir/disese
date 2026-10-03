@@ -9,19 +9,47 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$es_name  = isset( $args['name'] ) ? (string) $args['name'] : (string) $name;
+$es_name = 'blog';
+
+if ( isset( $args['name'] ) ) {
+	$es_name = (string) $args['name'];
+} elseif ( isset( $name ) && is_string( $name ) && '' !== $name ) {
+	// Older WordPress versions expose the template-part slug suffix directly.
+	$es_name = (string) $name;
+}
+
 $es_force = ! empty( $args['force'] );
 
-if ( ! $es_force && ! (bool) es_opt( $es_name ) ) {
+if ( ! $es_force && ! es_sidebar_visible( $es_name ) ) {
 	return;
 }
 
+$es_sidebar_class = 'es-sidebar es-sidebar--' . ( 'shop' === $es_name ? 'shop' : 'blog' );
+
 $es_sidebar_id = 'shop' === $es_name ? 'es-shop-sidebar' : 'es-blog-sidebar';
+
+if ( 'project' === $es_name ) {
+	// The projects archive sidebar is a filter panel, not a widget area.
+	?>
+	<aside class="<?php echo esc_attr( $es_sidebar_class ); ?>" role="complementary" aria-label="<?php esc_attr_e( 'فیلتر پروژه‌ها', 'erfan-sanat' ); ?>">
+		<?php
+		get_template_part(
+			'template-parts/project/filters',
+			null,
+			array(
+				'base' => (string) get_post_type_archive_link( 'project' ),
+			)
+		);
+		?>
+	</aside>
+	<?php
+	return;
+}
 
 if ( ! is_active_sidebar( $es_sidebar_id ) ) {
 	// Fall back to useful defaults so the column is never empty on a fresh site.
 	?>
-	<aside class="es-sidebar" role="complementary">
+	<aside class="<?php echo esc_attr( $es_sidebar_class ); ?>" role="complementary">
 		<section class="es-widget es-widget--search">
 			<h2 class="es-widget__title"><?php esc_html_e( 'جست‌وجو', 'erfan-sanat' ); ?></h2>
 			<?php get_search_form(); ?>
@@ -91,6 +119,6 @@ if ( ! is_active_sidebar( $es_sidebar_id ) ) {
 	return;
 }
 ?>
-<aside class="es-sidebar" role="complementary" aria-label="<?php esc_attr_e( 'ستون کناری', 'erfan-sanat' ); ?>">
+<aside class="<?php echo esc_attr( $es_sidebar_class ); ?>" role="complementary" aria-label="<?php esc_attr_e( 'ستون کناری', 'erfan-sanat' ); ?>">
 	<?php dynamic_sidebar( $es_sidebar_id ); ?>
 </aside>

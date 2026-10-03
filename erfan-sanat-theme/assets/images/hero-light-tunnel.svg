@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" role="img" aria-label="تونل نوری شهری در شب">
+	<defs>
+		<linearGradient id="heroSky" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#05060a"/>
+			<stop offset=".55" stop-color="#0a0d14"/>
+			<stop offset="1" stop-color="#04050a"/>
+		</linearGradient>
+		<radialGradient id="heroCore" cx="50%" cy="52%" r="42%">
+			<stop offset="0" stop-color="#ffd67a" stop-opacity=".95"/>
+			<stop offset=".35" stop-color="#f2b32c" stop-opacity=".55"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity="0"/>
+		</radialGradient>
+		<radialGradient id="heroHalo" cx="50%" cy="50%" r="50%">
+			<stop offset=".55" stop-color="#f2b32c" stop-opacity="0"/>
+			<stop offset=".8" stop-color="#f2b32c" stop-opacity=".35"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity="0"/>
+		</radialGradient>
+		<linearGradient id="heroArch" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#ffd980" stop-opacity=".9"/>
+			<stop offset=".6" stop-color="#f2b32c" stop-opacity=".35"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity=".05"/>
+		</linearGradient>
+		<linearGradient id="heroFloor" x1="0" y1="0" x2="0" y2="1">
+			<stop offset="0" stop-color="#f2b32c" stop-opacity=".22"/>
+			<stop offset="1" stop-color="#f2b32c" stop-opacity="0"/>
+		</linearGradient>
+		<filter id="heroBlur" x="-20%" y="-20%" width="140%" height="140%">
+			<feGaussianBlur stdDeviation="18"/>
+		</filter>
+		<filter id="heroSoft" x="-30%" y="-30%" width="160%" height="160%">
+			<feGaussianBlur stdDeviation="46"/>
+		</filter>
+	</defs>
+
+	<rect width="1920" height="1080" fill="url(#heroSky)"/>
+
+	<!-- distant city silhouette -->
+	<g fill="#0c1018">
+		<path d="M0 640h96v-72h58v72h74v-124h52v124h96v-58h80v58h110v-96h64v96h96v-70h58v70h120v-110h52v110h132v-64h78v64h112v-96h56v96h108v-52h74v52h118v-88h54v88h136v-66h72v66h134v-102h50v102h100v-58h62v58h120v-84h48v84h96v440H0z"/>
+	</g>
+
+	<!-- glow behind the tunnel -->
+	<ellipse cx="960" cy="560" rx="640" ry="420" fill="url(#heroCore)" filter="url(#heroSoft)"/>
+
+	<!-- receding light arches -->
+	<g fill="none" stroke="url(#heroArch)" stroke-linecap="round">
+		<path d="M140 1000V560a820 820 0 0 1 1640 0v440" stroke-width="26" opacity=".95"/>
+		<path d="M300 1000V580a660 660 0 0 1 1320 0v420" stroke-width="20" opacity=".7"/>
+		<path d="M440 1000V600a520 520 0 0 1 1040 0v400" stroke-width="15" opacity=".55"/>
+		<path d="M560 1000V616a400 400 0 0 1 800 0v384" stroke-width="11" opacity=".42"/>
+		<path d="M664 1000V630a296 296 0 0 1 592 0v370" stroke-width="8" opacity=".32"/>
+		<path d="M748 1000V642a212 212 0 0 1 424 0v358" stroke-width="6" opacity=".24"/>
+		<path d="M816 1000V652a144 144 0 0 1 288 0v348" stroke-width="4" opacity=".18"/>
+	</g>
+
+	<!-- inner tunnel glow -->
+	<ellipse cx="960" cy="700" rx="300" ry="200" fill="url(#heroHalo)"/>
+	<ellipse cx="960" cy="700" rx="120" ry="86" fill="#ffe6ad" opacity=".85" filter="url(#heroBlur)"/>
+
+	<!-- reflective floor lines -->
+	<g stroke="url(#heroFloor)" stroke-width="3">
+		<path d="M960 1080V700"/>
+		<path d="M720 1080 878 726"/>
+		<path d="M1200 1080 1042 726"/>
+		<path d="M480 1080 800 756"/>
+		<path d="M1440 1080 1120 756"/>
+		<path d="M240 1080 726 790"/>
+		<path d="M1680 1080 1194 790"/>
+	</g>
+	<rect y="700" width="1920" height="380" fill="url(#heroFloor)"/>
+
+	<!-- light points along the walls -->
+	<g fill="#ffe6ad">
+		<circle cx="196" cy="806" r="7" opacity=".9"/>
+		<circle cx="368" cy="742" r="6" opacity=".8"/>
+		<circle cx="560" cy="700" r="5" opacity=".7"/>
+		<circle cx="1724" cy="806" r="7" opacity=".9"/>
+		<circle cx="1552" cy="742" r="6" opacity=".8"/>
+		<circle cx="1360" cy="700" r="5" opacity=".7"/>
+	</g>
+
+	<!-- bokeh -->
+	<g fill="#f2b32c" opacity=".28">
+		<circle cx="250" cy="300" r="4"/>
+		<circle cx="420" cy="210" r="3"/>
+		<circle cx="1510" cy="260" r="5"/>
+		<circle cx="1690" cy="380" r="3.5"/>
+		<circle cx="1180" cy="170" r="3"/>
+		<circle cx="780" cy="200" r="2.6"/>
+	</g>
+
+	<!-- vignette -->
+	<radialGradient id="heroVignette" cx="50%" cy="55%" r="72%">
+		<stop offset=".55" stop-color="#000" stop-opacity="0"/>
+		<stop offset="1" stop-color="#000" stop-opacity=".72"/>
+	</radialGradient>
+	<rect width="1920" height="1080" fill="url(#heroVignette)"/>
+</svg>

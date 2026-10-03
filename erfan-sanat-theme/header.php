@@ -45,7 +45,10 @@ $es_sticky       = (bool) es_opt( 'header_sticky', true );
 		</div>
 	</header>
 
-	<?php get_template_part( 'template-parts/header/mobile-menu' ); ?>
+	<?php
+	get_template_part( 'template-parts/header/mobile-menu' );
+	get_template_part( 'template-parts/header/search' );
+	?>
 
 	<?php if ( es_opt( 'enable_scroll_progress', true ) && is_singular() ) : ?>
 		<div class="es-progress" data-es-progress aria-hidden="true"><span class="es-progress__bar" data-es-progress-bar></span></div>

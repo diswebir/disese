@@ -82,8 +82,10 @@ $GLOBALS['wp_query'] = $es_projects; // phpcs:ignore WordPress.WP.GlobalVariable
 	wp_reset_postdata();
 	?>
 
+	<?php $es_side = es_sidebar_visible( 'project' ); ?>
+
 	<div class="es-container es-archive">
-		<div class="es-archive__layout has-sidebar">
+		<div class="es-archive__layout <?php echo $es_side ? 'has-sidebar' : 'no-sidebar'; ?>">
 			<div class="es-archive__body">
 				<?php
 				get_template_part(
@@ -100,57 +102,23 @@ $GLOBALS['wp_query'] = $es_projects; // phpcs:ignore WordPress.WP.GlobalVariable
 				?>
 			</div>
 
-			<aside class="es-sidebar">
-				<?php if ( es_opt( 'project_show_filters', true ) ) : ?>
-					<section class="es-widget">
-						<h2 class="es-widget__title"><?php esc_html_e( 'دسته‌بندی پروژه', 'erfan-sanat' ); ?></h2>
-						<?php
-						$es_cats = get_terms( array( 'taxonomy' => 'project_cat', 'hide_empty' => false ) );
-
-						if ( ! is_wp_error( $es_cats ) && $es_cats ) {
-							echo '<ul class="es-widget__list es-filter-list">';
-							foreach ( $es_cats as $es_term ) {
-								printf(
-									'<li%1$s><a href="%2$s">%3$s <span class="es-count">(%4$s)</span></a></li>',
-									$es_cat === $es_term->slug ? ' class="is-active"' : '',
-									esc_url( add_query_arg( 'project_cat', $es_term->slug, get_permalink() ) ),
-									esc_html( $es_term->name ),
-									esc_html( es_num( number_format_i18n( $es_term->count ) ) )
-								);
-							}
-							echo '</ul>';
-						}
-						?>
-					</section>
-
-					<section class="es-widget">
-						<h2 class="es-widget__title"><?php esc_html_e( 'موقعیت پروژه', 'erfan-sanat' ); ?></h2>
-						<?php
-						$es_locations = get_terms( array( 'taxonomy' => 'project_location', 'hide_empty' => false ) );
-
-						if ( ! is_wp_error( $es_locations ) && $es_locations ) {
-							echo '<ul class="es-widget__list es-filter-list">';
-							foreach ( $es_locations as $es_term ) {
-								printf(
-									'<li%1$s><a href="%2$s">%3$s <span class="es-count">(%4$s)</span></a></li>',
-									$es_place === $es_term->slug ? ' class="is-active"' : '',
-									esc_url( add_query_arg( 'project_location', $es_term->slug, get_permalink() ) ),
-									esc_html( $es_term->name ),
-									esc_html( es_num( number_format_i18n( $es_term->count ) ) )
-								);
-							}
-							echo '</ul>';
-						}
-						?>
-					</section>
-
-					<?php if ( $es_cat || $es_place ) : ?>
-						<a class="es-btn es-btn--ghost es-btn--block" href="<?php echo esc_url( (string) get_permalink() ); ?>">
-							<?php esc_html_e( 'حذف فیلترها', 'erfan-sanat' ); ?>
-						</a>
-					<?php endif; ?>
-				<?php endif; ?>
+			<?php if ( $es_side ) : ?>
+			<aside class="es-sidebar es-sidebar--project">
+				<?php
+			if ( es_opt( 'project_show_filters', true ) ) {
+				get_template_part(
+					'template-parts/project/filters',
+					null,
+					array(
+						'base'     => (string) get_permalink(),
+						'cat'      => $es_cat,
+						'location' => $es_place,
+					)
+				);
+			}
+			?>
 			</aside>
+			<?php endif; ?>
 		</div>
 	</div>
 </main>

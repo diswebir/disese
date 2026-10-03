@@ -705,9 +705,16 @@ function es_install_demo_content() {
 			wp_set_post_terms( $post_id, $tag_ids, 'post_tag' );
 		}
 
-		if ( $post['reviewer'] ) {
-			update_post_meta( $post_id, '_es_technical_reviewer', $post['reviewer'] );
-		}
+		// Populate the editorial metadata model: every demo article carries a
+		// technical reviewer and a reading time derived from its body copy.
+		update_post_meta(
+			$post_id,
+			'_es_technical_reviewer',
+			$post['reviewer'] ? $post['reviewer'] : __( 'دفتر فنی عرفان صنعت', 'erfan-sanat' )
+		);
+
+		preg_match_all( '/\S+/u', wp_strip_all_tags( $content ), $word_matches );
+		update_post_meta( $post_id, '_es_reading_time_min', max( 1, (int) ceil( count( $word_matches[0] ) / 190 ) ) );
 
 		if ( $faq ) {
 			update_post_meta( $post_id, '_es_faq_schema_repeater', $faq );

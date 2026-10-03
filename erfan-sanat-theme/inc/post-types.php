@@ -388,16 +388,25 @@ function es_projects_archive_query( $query ) {
 add_action( 'pre_get_posts', 'es_projects_archive_query' );
 
 /**
- * Skip links / admin toolbar helper: view project archive link.
+ * Admin toolbar shortcut: add a project straight from the toolbar.
  *
- * @param array $links Admin bar links.
- * @return array
+ * The `admin_bar_menu` hook passes the WP_Admin_Bar object (not an array), so
+ * the node has to be registered through add_node().
+ *
+ * @param WP_Admin_Bar $wp_admin_bar Toolbar instance.
+ * @return void
  */
-function es_admin_bar_links( $links ) {
-	if ( current_user_can( 'edit_posts' ) ) {
-		$links[] = '<a class="ab-item" href="' . esc_url( admin_url( 'post-new.php?post_type=project' ) ) . '">' . esc_html__( 'پروژهٔ جدید', 'erfan-sanat' ) . '</a>';
+function es_admin_bar_links( $wp_admin_bar ) {
+	if ( ! current_user_can( 'edit_posts' ) || ! $wp_admin_bar instanceof WP_Admin_Bar ) {
+		return;
 	}
 
-	return $links;
+	$wp_admin_bar->add_node(
+		array(
+			'id'    => 'es-new-project',
+			'title' => __( 'پروژهٔ جدید', 'erfan-sanat' ),
+			'href'  => admin_url( 'post-new.php?post_type=project' ),
+		)
+	);
 }
-add_filter( 'admin_bar_menu', 'es_admin_bar_links', 80 );
+add_action( 'admin_bar_menu', 'es_admin_bar_links', 80 );
